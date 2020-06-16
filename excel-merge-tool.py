@@ -1,6 +1,6 @@
 import tkinter, tkinter.filedialog, threading
 import openpyxl as xl
-from copy import copy
+from copy import copy, deepcopy
 import os, sys 
 
 
@@ -76,19 +76,31 @@ def merge_files():
             progress_text.set(str(wb_num)+"/"+str(length)+" Workbook   |   "+str(ws_num)+"/"+str(len(workbook.worksheets))+" Worksheet Copying...")
             ws_num += 1
 
+            new_worksheet = sheet.title not in out_workbook.sheetnames
+            if new_worksheet:
+                out_workbook.create_sheet(sheet.title, workbook.sheetnames.index(sheet.title))
+                start_row = 1
+            else:
+                start_row = 2
+            
             outWorkSheet = out_workbook[sheet.title]
             workSheetRow = first_empty_row(outWorkSheet)-1
             last_row = first_empty_row(sheet)
             last_column = first_empty_column(sheet)
 
-            for row in range(2, last_row):
+
+            for row in range(start_row, last_row):
                 workSheetRow += 1
 
                 for column in range(1, last_column):
                     cell = outWorkSheet.cell(row=workSheetRow, column=column)
                     cell.value = sheet.cell(row=row, column=column).value
                     
-                    previous_cell = outWorkSheet.cell(row=workSheetRow-2, column=column)
+                    if new_worksheet:
+                        previous_cell = sheet.cell(row=workSheetRow, column=column)
+                    else:
+                        previous_cell = outWorkSheet.cell(row=workSheetRow-2, column=column)
+                        
                     cell.font = copy(previous_cell.font)
                     cell.border = copy(previous_cell.border)
                     cell.fill = copy(previous_cell.fill)
