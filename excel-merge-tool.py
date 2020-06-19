@@ -76,14 +76,21 @@ def merge_files():
             progress_text.set(str(wb_num)+"/"+str(length)+" Workbook   |   "+str(ws_num)+"/"+str(len(workbook.worksheets))+" Worksheet Copying...")
             ws_num += 1
 
-            new_worksheet = sheet.title not in out_workbook.sheetnames
+            new_worksheet = sheet.title not in out_workbook.sheetnames and sheet.title.upper() not in out_workbook.sheetnames and sheet.title.lower() not in out_workbook.sheetnames
             if new_worksheet:
                 out_workbook.create_sheet(sheet.title, workbook.sheetnames.index(sheet.title))
+                sheetName = sheet.title
                 start_row = 1
             else:
                 start_row = 2
+                if sheet.title in out_workbook.sheetnames:
+                    sheetName = sheet.title
+                elif sheet.title.upper() in out_workbook.sheetnames:
+                    sheetName = sheet.title.upper()
+                else:
+                    sheetName = sheet.title.lower()
             
-            outWorkSheet = out_workbook[sheet.title]
+            outWorkSheet = out_workbook[sheetName]
             workSheetRow = first_empty_row(outWorkSheet)-1
             last_row = first_empty_row(sheet)
             last_column = first_empty_column(sheet)
