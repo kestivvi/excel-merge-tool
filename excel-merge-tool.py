@@ -105,6 +105,10 @@ def merge_files():
                     
                     if new_worksheet:
                         previous_cell = sheet.cell(row=workSheetRow, column=column)
+                    elif workSheetRow == 2:
+                        previous_cell = sheet.cell(row=workSheetRow, column=column)
+                    elif workSheetRow == 3:
+                        previous_cell = sheet.cell(row=workSheetRow, column=column)
                     else:
                         previous_cell = outWorkSheet.cell(row=workSheetRow-2, column=column)
                         
