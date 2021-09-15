@@ -1,10 +1,9 @@
 import tkinter, tkinter.filedialog, threading
-from tkinter.constants import SE
 import openpyxl as xl
-from copy import copy, deepcopy
+from copy import copy
 from typing import List
 from abc import ABC, abstractmethod
-from enum import Enum, auto
+from enum import Enum
 
 
 class DifferentNumberOfColumnsError(Exception):
