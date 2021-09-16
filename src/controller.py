@@ -39,7 +39,7 @@ class Controller(Controller_abc):
         # Copy data from each file to out excel file
         for current_workbook, workbook in enumerate(self.model.files[1:]):
             self.view.setProgressText(f"Loading workbook nr {current_workbook+2}...")
-            Workbook.merge_workbook(self.model.output_workbook, Workbook(workbook), progress_callback_fn=notify_about_progress)
+            Workbook.merge_workbook(self.model.output_workbook, Workbook(workbook), progress_callback_fn=notify_about_progress, copy_style=self.view.get_copy_style_bool())
 
         # save new excel file
         self.view.setProgressText("Saving now...")

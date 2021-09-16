@@ -21,6 +21,9 @@ class View(View_abc):
         self.window.title(title)
         self.window.iconbitmap(icon_path)
 
+        self.bool_copy_style = tkinter.IntVar()
+        self.bool_copy_style.set(1)
+
 
     def setUpView(self, controller: Controller):
         btn_load = tkinter.Button(self.window, text="Select files", command=controller.handle_load_files_click, padx=15, pady=5)
@@ -46,9 +49,19 @@ class View(View_abc):
         label3.grid(row=3, column=1, sticky="W", pady=5, columnspan=2)
         self.save_location_text.set("None")
 
+        checkbox_copy_style = tkinter.Checkbutton(self.window, variable=self.bool_copy_style, onvalue=1, offvalue=0)
+        checkbox_copy_style.grid(row=4, column=1, sticky='W')
+
+        label4 = tkinter.Label(self.window, text="Copy cells' style")
+        label4.grid(row=4, column=0, pady=5, columnspan=1)
+
         self.progress_text = tkinter.StringVar(self.window)
         progress_label = tkinter.Label(self.window, textvariable=self.progress_text, padx=10, pady=5)
-        progress_label.grid(row=4,column=0, columnspan=3, sticky='W')
+        progress_label.grid(row=5,column=0, columnspan=3, sticky='W')
+
+
+    def get_copy_style_bool(self):
+        return self.bool_copy_style.get()
 
 
     def askForInputFiles(self, title: str = "Select workbooks") -> List[str]:

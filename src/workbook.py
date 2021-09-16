@@ -141,7 +141,7 @@ class Workbook:
 
 
     @staticmethod
-    def merge_workbook(workbook1, workbook2, progress_callback_fn = None):
+    def merge_workbook(workbook1, workbook2, progress_callback_fn = None, copy_style = True):
         """ progress_callback_fn takes as input dict 
             {
                 "sheet": {
@@ -172,6 +172,7 @@ class Workbook:
 
         for sheet_num, worksheet2 in enumerate(workbook2.worksheets):
             
+            # TODO: Possibly there might be sheets with different size cases and then we get exception that sheet doesn't exist
             is_other_worksheet_in_current_worksheets = worksheet2.title.lower() in map(lambda s: s.lower(), workbook1.sheetnames)
             
             if not is_other_worksheet_in_current_worksheets:
@@ -180,4 +181,4 @@ class Workbook:
                 continue
             
             worksheet1 = workbook1[worksheet2.title]
-            Workbook.merge_sheets(worksheet1, worksheet2, progress_callback_fn=progress_callback)
+            Workbook.merge_sheets(worksheet1, worksheet2, progress_callback_fn=progress_callback, copy_style=copy_style)

@@ -24,6 +24,11 @@ class View(ABC):
 
 
     @abstractmethod
+    def get_copy_style_bool(self):
+        """Get the value of a checkbox are we gonna copy cell's style."""
+
+
+    @abstractmethod
     def askForInputFiles(self, title: str = "Select workbooks") -> List[str]:
         """Ask user to select input files."""
 
